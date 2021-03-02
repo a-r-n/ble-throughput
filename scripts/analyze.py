@@ -93,17 +93,21 @@ def plot_throughput(df, ax=None):
     if not ax:
         _, ax = plt.subplots()
     tp = df.total_recv.diff()[1:] / df.timestamp.diff()[1:]
-    ax.plot(df.timestamp[1:], tp)
+    avg = tp.mean()
+    ax.plot(df.timestamp[1:], tp, label=f"Avg. Throughput: {avg:.2f}")
     ax.set_ylabel("Throughput (bytes/s)")
     ax.set_xlabel("Time (s)")
+    ax.legend()
 
 
-def plot_rssi(df, ax=None):
+def plot_col(df, col, title, ax=None):
     if not ax:
         _, ax = plt.subplots()
-    ax.plot(df.timestamp, df.rssi)
-    ax.set_ylabel("RSSI")
+    avg = df[col].mean()
+    ax.plot(df.timestamp, df.rssi, label=f"Avg. {col}: {avg:.2f}")
+    ax.set_ylabel(title)
     ax.set_xlabel("Time (s)")
+    ax.legend()
 
 
 def plot_one_file(fname: str):
@@ -114,11 +118,11 @@ def plot_one_file(fname: str):
     i = 0
     for j in zero_starts:
         plot_throughput(df[i:j], ax=axes[0])
-        plot_rssi(df[i:j], ax=axes[1])
+        plot_col(df[i:j], col="rssi", title="RSSI", ax=axes[1])
         i = j
 
     plot_throughput(df[i:], ax=axes[0])
-    plot_rssi(df[i:], ax=axes[1])
+    plot_col(df[i:], col="rssi", title="RSSI", ax=axes[1])
     plt.show()
 
 

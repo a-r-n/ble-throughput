@@ -23,7 +23,7 @@ proc = subprocess.Popen(
 )
 
 # Wait until it is ready
-input("hit enter after selecting the device in JLink ")
+input("hit enter after selecting the device in JLink. If you have just one device connected, press enter right away.")
 
 try:
     # Open Telnet to RTT port and start printing data

@@ -67,6 +67,7 @@ def parse_file(fname: str):
             continue
         pts.append(pt)
 
+    pts = pts[1:]  # discard first one
     df = pd.DataFrame(pts)
     df.timestamp -= df.timestamp[0]  # normalize timestamp
     return df
@@ -110,8 +111,8 @@ def plot_col(df, col, title, ax=None):
     ax.legend()
 
 
-def plot_one_file(fname: str):
-    df = parse_file(fname)
+def plot_one_file(ifname: str, ofname: str = ""):
+    df = parse_file(ifname)
     zero_starts = get_segments(df)
 
     fig, axes = plt.subplots(2, 1, figsize=(9, 7))
@@ -123,6 +124,9 @@ def plot_one_file(fname: str):
 
     plot_throughput(df[i:], ax=axes[0])
     plot_col(df[i:], col="rssi", title="RSSI", ax=axes[1])
+    if not ofname:
+        ofname = ifname.rsplit(".", 1)[0] + ".png"
+    plt.savefig(ofname)
     plt.show()
 
 

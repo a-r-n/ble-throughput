@@ -1,0 +1,5 @@
+r
+loadfile pca10056/s140/armgcc/_build/nrf52840_xxaa.hex
+r
+g
+exit

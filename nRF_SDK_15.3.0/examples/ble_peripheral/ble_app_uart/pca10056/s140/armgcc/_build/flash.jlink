@@ -1,0 +1,5 @@
+r
+loadfile _build/nrf52840_xxaa.hex 
+r
+g
+exit

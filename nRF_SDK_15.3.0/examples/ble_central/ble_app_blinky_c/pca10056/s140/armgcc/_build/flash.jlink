@@ -1,0 +1,5 @@
+r
+loadfile nrf52840_xxaa.hex   
+r
+g
+exit
